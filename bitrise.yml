@@ -58,7 +58,7 @@ workflows:
             pwd
             ls -lart
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity  -nographics -quit -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -logfile
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -logfile
     - script:
         title: Build AAR Generation
         inputs:
@@ -66,7 +66,7 @@ workflows:
             #!/bin/bash
             # fail if any commands fails
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -nographics -quit -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release
             ls -lart /Users/vagrant/
             ls -lart /Users/vagrant/git
     - script:
