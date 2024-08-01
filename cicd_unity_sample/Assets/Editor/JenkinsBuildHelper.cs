@@ -90,7 +90,7 @@ class JenkinsBuildHelper
             }
 
         }
-
+        
         //RunTestCases();
         //WriteVersionNumberToFile();
 
@@ -99,9 +99,10 @@ class JenkinsBuildHelper
         Debug.Log("Job_name : " + ABVersionInfo.JobName);
         string export_folder_name = ABVersionInfo.JobName + "_Export";
 #if UNITY_ANDROID
-        GenericBuild(SCENES, "../../" + export_folder_name, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
+       //GenericBuild(SCENES, "../../" + export_folder_name, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
+       GenericBuild(SCENES, "cicd_unity_sample_export", BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
 #else
-    PerformiOSBuild();
+        PerformiOSBuild();
 #endif
     }
 
