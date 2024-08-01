@@ -1,0 +1,19 @@
+workflows:
+  ios-native-workflow:
+    name: iOS Native
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      vars:
+        UNITY_VERSION: 2019.4.38f1
+        UNITY_VERSION_CHANGESET: fdbb7325fa47
+        BUILD_SCRIPT: BuildAndroid
+        PACKAGE_NAME: "io.codemagic.unity" # <-- Put your package name here e.g. com.domain.myapp
+    scripts:
+      - name: Activate Unity License
+        script: |  
+          /Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -quit -logFile -serial SC-JEPB-2WDF-VQ46-FU2M-6HD6 -username ranadheer.yarlagadda@ivycomptech.com -password Shashin@456     
+      - name: Install Unity version, build support modules, ndk and jdk
+        script: |  
+          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -- --headless install --version ${UNITY_VERSION} --changeset ${UNITY_VERSION_CHANGESET}
+          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -- --headless install-modules --version ${UNITY_VERSION} -m android android-sdk-ndk-tools android-open-jdk
