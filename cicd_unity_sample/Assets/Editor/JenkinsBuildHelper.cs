@@ -26,6 +26,8 @@ class JenkinsBuildHelper
     [MenuItem("IvyJenkins/PerformAndroidIOSBuild")]
     static void PerformAndroidIOSBuild()
     {
+        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
+
         bool isDebugBuild = false;
         bool isAssetBundleFeatureEnabled = false;
 
