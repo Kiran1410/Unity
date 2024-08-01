@@ -99,6 +99,7 @@ class JenkinsBuildHelper
         Debug.Log("Job_name : " + ABVersionInfo.JobName);
         string export_folder_name = ABVersionInfo.JobName + "_Export";
 #if UNITY_ANDROID
+ Debug.Log("UNITY_ANDROID : called...");
        //GenericBuild(SCENES, "../../" + export_folder_name, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
        GenericBuild(SCENES, "cicd_unity_sample_export", BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
 #else
@@ -109,7 +110,9 @@ class JenkinsBuildHelper
     [MenuItem("IvyJenkins/PerformiOSBuild")]
     static void PerformiOSBuild()
     {
-        GenericBuild(SCENES, "../../"+ ABVersionInfo.JobName, BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
+        Debug.Log("PerformiOSBuild : called...");
+        //GenericBuild(SCENES, "../../"+ ABVersionInfo.JobName, BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
+        GenericBuild(SCENES, "cicd_unity_sample_export", BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
     }
 
     [MenuItem("IvyJenkins/DisableAllScenes")]
