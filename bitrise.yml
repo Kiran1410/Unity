@@ -42,12 +42,7 @@ workflows:
             unzip -q android-ndk-r23c-linux.zip
 
             # move to its final location
-            mv ./android-ndk-23.1.7779620 /tmp/android-ndk
-
-            # remove temp dir
-            cd /tmp/android-ndk
-            rm -rf /tmp/android-ndk-tmp
-
+            mv ./android-ndk-r23c /tmp/android-ndk
 
             # add to PATH
             export PATH=${PATH}:/tmp/android-ndk
