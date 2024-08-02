@@ -34,23 +34,23 @@ workflows:
             sudo -S installer -package ./ios.pkg -target / -verbose
 
             # download
-            mkdir -p /opt/android-ndk
-            cd /opt/android-ndk
+            mkdir -p /tmp/android-ndk
+            cd /tmp/android-ndk
             wget -q https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
 
             # uncompress
             unzip -q android-ndk-r23c-linux.zip
 
             # move to its final location
-            mv ./android-ndk-23.1.7779620 /opt/android-ndk
+            mv ./android-ndk-23.1.7779620 /tmp/android-ndk
 
             # remove temp dir
-            cd /opt/android-ndk
+            cd /tmp/android-ndk
             rm -rf /tmp/android-ndk-tmp
 
 
             # add to PATH
-            export PATH=${PATH}:/opt/android-ndk
+            export PATH=${PATH}:/tmp/android-ndk
             # expose for subsequent steps
             envman add --key PATH --value "$PATH"
     - script:
@@ -117,7 +117,7 @@ workflows:
         machine_type_id: g2-m1-max.5core
     envs:
     - NDK_Version: 23.1.7779620
-      opts:
+      tmps:
         is_expand: false
 meta:
   bitrise.io:
