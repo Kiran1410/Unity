@@ -34,6 +34,7 @@ workflows:
             sudo -S installer -package ./ios.pkg -target / -verbose
 
             # download
+            mkdir -p /opt/android-ndk
             cd /opt/android-ndk
             wget -q https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
 
