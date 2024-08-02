@@ -35,6 +35,26 @@ workflows:
 
             #install unity iOS support pkg
             sudo -S installer -package ./ios.pkg -target / -verbose
+
+            # download
+            cd /opt/android-ndk
+            wget -q https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
+
+            # uncompress
+            unzip -q android-ndk-r23c-linux.zip
+
+            # move to its final location
+            mv ./android-ndk-23.1.7779620 /opt/android-ndk
+
+            # remove temp dir
+            cd /opt/android-ndk
+            rm -rf /tmp/android-ndk-tmp
+
+
+            # add to PATH
+            export PATH=${PATH}:/opt/android-ndk
+            # expose for subsequent steps
+            envman add --key PATH --value "$PATH"
     - script:
         title: Activate Unity
         inputs:
