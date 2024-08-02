@@ -1,5 +1,4 @@
----
-format_version: '13'
+format_version: "13"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 workflows:
@@ -8,6 +7,7 @@ workflows:
     - activate-ssh-key@3.1.1:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - git-clone@3.4.2: {}
+    - install-missing-android-tools@3: {}
     - script:
         title: Download & Install Unity
         inputs:
@@ -60,28 +60,27 @@ workflows:
 
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -logfile
     - script:
-        title: Build AAR Generation
+        title: Build Export Project Generation
         inputs:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget iOS
             ls -lart /Users/
             ls -lart /Users/vagrant/
             ls -lart /Users/vagrant/git
             ls -lart /Users/vagrant/git/cicd_unity_sample
-            ls -lart cicd_unity_sample/cicd_unity_sample_export
     - script:
         title: Build AAR Generation
         inputs:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
-            cd cicd_unity_sample/cicd_unity_sample_export
+            cd /Users/vagrant/git/cicd_unity_sample_export
+            ls -lart
             gradle clean
             gradle assemblerelease
-            
     - script:
         is_always_run: true
         title: Deactivate License
@@ -103,5 +102,5 @@ meta:
 trigger_map:
 - push_branch: main
   workflow: primary
-- pull_request_source_branch: "*"
+- pull_request_source_branch: '*'
   workflow: primary
