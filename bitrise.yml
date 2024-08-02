@@ -66,7 +66,7 @@ workflows:
             #!/bin/bash
             # fail if any commands fails
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
             ls -lart /Users/
             ls -lart /Users/vagrant/
             ls -lart /Users/vagrant/git
@@ -78,7 +78,7 @@ workflows:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
-            cd cicd_unity_sample/cicd_unity_sample_export
+            cd /Users/vagrant/git/cicd_unity_sample_export_android
             gradle clean
             gradle assemblerelease
             

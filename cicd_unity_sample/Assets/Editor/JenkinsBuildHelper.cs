@@ -26,8 +26,7 @@ class JenkinsBuildHelper
     [MenuItem("IvyJenkins/PerformAndroidIOSBuild")]
     static void PerformAndroidIOSBuild()
     {
-        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
-
+      
         bool isDebugBuild = false;
         bool isAssetBundleFeatureEnabled = false;
 
@@ -103,7 +102,7 @@ class JenkinsBuildHelper
 #if UNITY_ANDROID
  Debug.Log("UNITY_ANDROID : called...");
        //GenericBuild(SCENES, "../../" + export_folder_name, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
-       GenericBuild(SCENES, "cicd_unity_sample_export", BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
+       GenericBuild(SCENES, "../../cicd_unity_sample_export_android", BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
 #else
         PerformiOSBuild();
 #endif
@@ -114,7 +113,7 @@ class JenkinsBuildHelper
     {
         Debug.Log("PerformiOSBuild : called...");
         //GenericBuild(SCENES, "../../"+ ABVersionInfo.JobName, BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
-        GenericBuild(SCENES, "cicd_unity_sample_export", BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
+        GenericBuild(SCENES, "../../cicd_unity_sample_export_iOS", BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
     }
 
     [MenuItem("IvyJenkins/DisableAllScenes")]
