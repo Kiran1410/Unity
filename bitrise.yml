@@ -78,7 +78,7 @@ workflows:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
-            cd /Users/vagrant/git/cicd_unity_sample_export_android
+            cd /Users/vagrant/git/cicd_unity_sample/cicd_unity_sample_export
             gradle clean
             gradle assemblerelease
             
