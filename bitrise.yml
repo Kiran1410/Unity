@@ -1,5 +1,4 @@
----
-format_version: '13'
+format_version: "13"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 workflows:
@@ -33,6 +32,20 @@ workflows:
 
             #install unity iOS support pkg
             sudo -S installer -package ./ios.pkg -target / -verbose
+
+            # download
+            mkdir -p /tmp/android-ndk
+            cd /tmp/android-ndk
+            wget -q https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
+
+            # uncompress
+            unzip -q android-ndk-r23c-linux.zip
+
+            # add to PATH
+            export PATH=${PATH}:/tmp/android-ndk
+            # expose for subsequent steps
+            envman add --key PATH --value "$PATH"
+            cd -
     - script:
         title: Activate Unity
         inputs:
@@ -66,7 +79,7 @@ workflows:
             #!/bin/bash
             # fail if any commands fails
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget iOS
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
             ls -lart /Users/
             ls -lart /Users/vagrant/
             ls -lart /Users/vagrant/git
@@ -81,7 +94,6 @@ workflows:
             ls -lart
             gradle clean
             gradle assemblerelease
-            
     - script:
         is_always_run: true
         title: Deactivate License
@@ -103,5 +115,5 @@ meta:
 trigger_map:
 - push_branch: main
   workflow: primary
-- pull_request_source_branch: "*"
+- pull_request_source_branch: '*'
   workflow: primary
