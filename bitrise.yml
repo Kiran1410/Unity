@@ -2,28 +2,105 @@ format_version: "13"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 workflows:
-  unity-android-workflow:
-    name: Unity Android Workflow
-    instance_type: mac_pro
-    max_build_duration: 120
-    environment:
-      vars:
-        UNITY_VERSION: 2022.3.24f1
-        UNITY_VERSION_CHANGESET: 334eb2a0b267
-        BUILD_SCRIPT: PerformAndroidIOSBuild
-      xcode: latest
-    scripts:
-      - name: Activate Unity License
-        script: |  
-          /Applications/Unity/Contents/MacOS/Unity -batchmode -quit -logFile -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234'
-      - name: Install Unity version, build support modules, ndk and jdk
-        script: |  
-          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -- --headless install --version ${UNITY_VERSION} --changeset ${UNITY_VERSION_CHANGESET}
-          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -- --headless install-modules --version ${UNITY_VERSION} -m android android-sdk-ndk-tools android-open-jdk          
-      - name: Set build number and export Unity
-        script: |
-          Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.$BUILD_SCRIPT release -buildTarget Android
-    publishing:
-      scripts:
-        - name: Deactivate Unity License
-          script: $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -returnlicense -nographics
+  primary:
+    steps:
+    - activate-ssh-key@3.1.1:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@3.4.2: {}
+    - script:
+        title: Download & Install Unity
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            ls -lart /Applications
+            #workaround for .NET issue https://github.com/dotnet/runtime/issues/64103
+            export COMPlus_ReadyToRun=0
+            envman add --key COMPlus_ReadyToRun --value 0
+            #download unity pkg
+            curl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg
+            #download android support platform
+            curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
+            #download iOS android support
+            #curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
+            #install unity pkg
+            sudo -S installer -package ./unity.pkg -target / -verbose
+
+            #install unity android support pkg
+            sudo -S installer -package ./android.pkg -target / -verbose
+
+            #install unity iOS support pkg
+            #sudo -S installer -package ./ios.pkg -target / -verbose
+            ls -lart /Applications
+    - script:
+        title: Activate Unity
+        inputs:
+        - content: |-
+            #!/bin/bash
+            # fail if any commands fails
+            set -ex
+            pwd
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer
+            ls -lart /Users/vagrant/
+            ls -lart /Users/vagrant/git/
+            ls -lart /Users/vagrant/git/cicd_unity_sample
+            ls -lart /Applications
+            ls -lart /Applications/Unity
+            ls -lart /Applications/Unity/Unity.app
+            ls -lart /Applications/Unity/Unity.app/Contents
+            ls -lart /Applications/Unity/Unity.app/Contents/MacOS
+            cd /Applications/Unity/Unity.app/Contents/MacOS
+            ./Unity --version
+            cd -
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -logfile &
+            sleep 30
+            sudo killall Unity
+            pwd
+            ls -lart
+
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -logfile
+    - script:
+        title: Build Export Project Generation
+        inputs:
+        - content: |-
+            #!/bin/bash
+            # fail if any commands fails
+
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
+            ls -lart /Users/
+            ls -lart /Users/vagrant/
+            ls -lart /Users/vagrant/git
+            ls -lart /Users/vagrant/git/cicd_unity_sample
+    - script:
+        title: Build AAR Generation
+        inputs:
+        - content: |-
+            #!/bin/bash
+            # fail if any commands fails
+            cd /Users/vagrant/git/cicd_unity_sample_export_android
+            ls -lart
+            gradle clean
+            gradle assemblerelease
+    - script:
+        is_always_run: true
+        title: Deactivate License
+        inputs:
+        - content: |-
+            #!/bin/bash
+            # fail if any commands fails
+
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense
+    meta:
+      bitrise.io:
+        license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
+        stack: osx-xcode-15.4.x
+        machine_type_id: g2-m1-max.5core
+meta:
+  bitrise.io:
+    stack: linux-docker-android-22.04
+    machine_type_id: standard
+trigger_map:
+- push_branch: main
+  workflow: primary
+- pull_request_source_branch: '*'
+  workflow: primary
