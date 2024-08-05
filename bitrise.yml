@@ -22,42 +22,16 @@ workflows:
             curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
 
             #download iOS android support
-            curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
+            #curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
 
             #install unity pkg
             sudo -S installer -package ./unity.pkg -target / -verbose
 
             #install unity android support pkg
-            sudo -S installer -package ./android.pkg -target / -verbose
+            sudo -S installer -package ./android.pkg -target /Applications/Unity/PlaybackEngines/AndroidPlayer -verbose
 
             #install unity iOS support pkg
-            sudo -S installer -package ./ios.pkg -target / -verbose
-
-            # NDK download and install
-            wget -q https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
-            # uncompress
-            unzip -q ./android-ndk-r23c-linux.zip
-            mv android-ndk-r23c NDK
-
-            ls -lart
-            ls -lart /Applications/Unity/
-            ls -lart /Applications/Unity/PlaybackEngines
-            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer
-            sudo -S cp -r ./NDK /Applications/Unity/PlaybackEngines/AndroidPlayer/
-            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
-
-            # add to PATH
-            export PATH=${PATH}:/Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
-            # expose for subsequent steps
-            envman add --key PATH --value "$PATH"
-    - set-java-version@1: {}
-    - android-sdk-update@1:
-        inputs:
-        - build_tools: $SDK_BUILD_TOOLS
-        - sdk_version: $SDK_Version
-        - system_images: null
-        - platform_tools: $SDK_PLATFORM
-        - tools: true
+            #sudo -S installer -package ./ios.pkg -target / -verbose
     - script:
         title: Activate Unity
         inputs:
