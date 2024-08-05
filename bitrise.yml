@@ -65,6 +65,7 @@ workflows:
             # fail if any commands fails
             set -ex
             pwd
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer
             ls -lart /Users/vagrant/
             ls -lart /Users/vagrant/git/
             ls -lart /Users/vagrant/git/cicd_unity_sample
