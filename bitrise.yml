@@ -28,10 +28,11 @@ workflows:
             sudo -S installer -package ./unity.pkg -target / -verbose
 
             #install unity android support pkg
-            sudo -S installer -package ./android.pkg -target /Applications/Unity/PlaybackEngines/AndroidPlayer -verbose
+            sudo -S installer -package ./android.pkg -target / -verbose
 
             #install unity iOS support pkg
             #sudo -S installer -package ./ios.pkg -target / -verbose
+            ls -lart /Applications
     - script:
         title: Activate Unity
         inputs:
