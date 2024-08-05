@@ -42,7 +42,7 @@ workflows:
             ls -lart /Applications/Unity/
             ls -lart /Applications/Unity/PlaybackEngines
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer
-            cp -r ./NDK /Applications/Unity/PlaybackEngines/AndroidPlayer/
+            sudo -S cp -r ./NDK /Applications/Unity/PlaybackEngines/AndroidPlayer/
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
 
             # add to PATH
