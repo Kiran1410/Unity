@@ -7,31 +7,36 @@ workflows:
     - activate-ssh-key@3.1.1:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - git-clone@3.4.2: {}
-    - script:
-        title: Download & Install Unity
+    - unity-install:
+        title: Unity install step
         inputs:
-        - content: |-
-            #!/bin/bash
-            set -ex
-            ls -lart /Applications
-            #workaround for .NET issue https://github.com/dotnet/runtime/issues/64103
-            export COMPlus_ReadyToRun=0
-            envman add --key COMPlus_ReadyToRun --value 0
-            #download unity pkg
-            curl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg
-            #download android support platform
-            curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
-            #download iOS android support
-            #curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
-            #install unity pkg
-            sudo -S installer -package ./unity.pkg -target / -verbose
+        - unity_version: 2022.3.24f1
+        - unity_version_changeset: 334eb2a0b267
+    # - script:
+    #     title: Download & Install Unity
+    #     inputs:
+    #     - content: |-
+    #         #!/bin/bash
+    #         set -ex
+    #         ls -lart /Applications
+    #         #workaround for .NET issue https://github.com/dotnet/runtime/issues/64103
+    #         export COMPlus_ReadyToRun=0
+    #         envman add --key COMPlus_ReadyToRun --value 0
+    #         #download unity pkg
+    #         curl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg
+    #         #download android support platform
+    #         curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
+    #         #download iOS android support
+    #         #curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
+    #         #install unity pkg
+    #         sudo -S installer -package ./unity.pkg -target / -verbose
 
-            #install unity android support pkg
-            sudo -S installer -package ./android.pkg -target / -verbose
+    #         #install unity android support pkg
+    #         sudo -S installer -package ./android.pkg -target / -verbose
 
-            #install unity iOS support pkg
-            #sudo -S installer -package ./ios.pkg -target / -verbose
-            ls -lart /Applications
+    #         #install unity iOS support pkg
+    #         #sudo -S installer -package ./ios.pkg -target / -verbose
+    #         ls -lart /Applications
     - script:
         title: Activate Unity
         inputs:
