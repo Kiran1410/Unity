@@ -39,10 +39,6 @@ workflows:
             unzip -q ./android-ndk-r23c-linux.zip
             mv android-ndk-r23c NDK
 
-            # SDK download and install
-            wget -q 
-            # uncompress
-
             ls -lart
             ls -lart /Applications/Unity/
             ls -lart /Applications/Unity/PlaybackEngines
