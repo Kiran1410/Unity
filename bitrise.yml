@@ -36,12 +36,13 @@ workflows:
             # NDK download and install
             wget -q https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
             # uncompress
+            unzip -q ./android-ndk-r23c-linux.zip
+            mv android-ndk-r23c NDK
+            ls -lart
             ls -lart /Applications/Unity/
             ls -lart /Applications/Unity/PlaybackEngines
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer
-            unzip -q ./android-ndk-r23c-linux.zip
-            ls -lart
-            cp -r ./android-ndk-r23c/* /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
+            cp -r ./NDK /Applications/Unity/PlaybackEngines/AndroidPlayer/
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
 
             # add to PATH
