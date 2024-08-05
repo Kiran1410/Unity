@@ -49,7 +49,6 @@ workflows:
             export PATH=${PATH}:/Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             # expose for subsequent steps
             envman add --key PATH --value "$PATH"
-            cd -
     - android-sdk-update@1:
         inputs:
         - build_tools: $SDK_BUILD_TOOLS
