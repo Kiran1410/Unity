@@ -181,6 +181,9 @@ workflows:
             sudo -S cp -r /usr/local/share/android-sdk/ /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
             sudo -S cp -r /Users/vagrant/.jenv/versions/11.0/. /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
     - script:
         title: Activate Unity
         inputs:
