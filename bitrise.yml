@@ -175,8 +175,8 @@ workflows:
             # expose for subsequent steps
             envman add --key PATH --value "$PATH"
             sudo -S cp -r /tmp/android-ndk /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
-            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             sudo -S cp -r /usr/local/share/android-sdk/ /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
+            sudo -S cp -r /Users/vagrant/.jenv/versions/11.0 /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/
     - script:
         title: Activate Unity
