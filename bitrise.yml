@@ -136,6 +136,9 @@ workflows:
     - activate-ssh-key@3.1.1:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - git-clone@3.4.2: {}
+    - restore-cache@2:
+        inputs:
+        - key: "$BITRISE_GIT_BRANCH"
     - script:
         title: Download & Install Unity
         inputs:
@@ -226,6 +229,11 @@ workflows:
             ls -lart
             gradle clean
             gradle assemblerelease
+    - save-cache@1:
+        inputs:
+        - paths: "$BITRISE_SOURCE_DIR"
+        - key: "$BITRISE_GIT_BRANCH"
+        is_always_run: true
     - script:
         is_always_run: true
         title: Deactivate License
@@ -240,12 +248,15 @@ workflows:
         license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
         stack: osx-xcode-15.4.x
         machine_type_id: g2-m1-max.5core
+    envs:
+    - opts:
+        is_expand: false
+      UPM_CACHE_ROOT: "/Users/vagrant/UnityCache"
+    - opts:
+        is_expand: false
+      UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
 meta:
   bitrise.io:
     stack: linux-docker-android-22.04
     machine_type_id: standard
-trigger_map:
-- push_branch: main
-  workflow: primary
-- pull_request_source_branch: "*"
-  workflow: primary
+
