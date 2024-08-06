@@ -191,11 +191,6 @@ workflows:
             #!/bin/bash
             # fail if any commands fails
             set -ex
-            pwd
-            ls -lart /Users/vagrant/
-            ls -lart /Users/vagrant/git/
-            ls -lart /Users/vagrant/git/cicd_unity_sample
-            ls -lart /Applications
             ls -lart /Applications/Unity
             ls -lart /Applications/Unity/Unity.app
             ls -lart /Applications/Unity/Unity.app/Contents
@@ -206,7 +201,6 @@ workflows:
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -logfile &
             sleep 30
             sudo killall Unity
-            pwd
             ls -lart
 
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -logfile
@@ -218,7 +212,6 @@ workflows:
             # fail if any commands fails
 
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
-            ls -lart /Users/
             ls -lart /Users/vagrant/
             ls -lart /Users/vagrant/git
             ls -lart /Users/vagrant/git/cicd_unity_sample
