@@ -145,10 +145,8 @@ workflows:
         - content: |-
             #!/bin/bash
             set -ex
-            ls -lart /Applications
             #download unity pkg
             curl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg
-            pwd
 
             #download android support platform
             curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
@@ -164,7 +162,8 @@ workflows:
 
             #install unity iOS support pkg
             sudo -S installer -package ./ios.pkg -target / -verbose
-
+            
+            ls -lart /Applications
             # download
             mkdir -p /tmp/android-ndk
             cd /tmp/android-ndk
