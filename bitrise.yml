@@ -171,7 +171,7 @@ workflows:
             sleep 30
             #sudo -S cp -r /usr/local/share/android-sdk/ndk-bundle/. /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             sudo -S cp -r /usr/local/share/android-sdk/ndk-bundle/. /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
-            sudo -S cp -r /usr/local/share/android-sdk/ /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
+            sudo -S cp -r /usr/local/share/android-sdk/. /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
             sudo -S cp -r /Users/vagrant/.jenv/versions/11.0/. /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
