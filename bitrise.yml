@@ -167,7 +167,7 @@ workflows:
             ls -lart
             ls -lart /Applications
             sdkmanager --install "ndk;23.1.7779620"
-            mkdir -p /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
+            sudo -S mkdir -p /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             sudo -S cp -r /usr/local/share/android-sdk/ndk/23.1.7779620/. /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             sudo -S cp -r /usr/local/share/android-sdk/ /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
             sudo -S cp -r /Users/vagrant/.jenv/versions/11.0/. /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
