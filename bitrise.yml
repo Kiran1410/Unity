@@ -162,27 +162,18 @@ workflows:
 
             #install unity iOS support pkg
             sudo -S installer -package ./ios.pkg -target / -verbose
-            
+            wget -q https://services.gradle.org/distributions/gradle-7.2-bin.zip
+            ls -lart
             ls -lart /Applications
-            # download
-            mkdir -p /tmp/android-ndk
-            cd /tmp/android-ndk
-            wget -q https://dl.google.com/android/repository/android-ndk-r23c-darwin.zip
-
-            # uncompress
-            unzip -q android-ndk-r23c-darwin.zip
-
-            # add to PATH
-            export PATH=${PATH}:/tmp/android-ndk
-            # expose for subsequent steps
-            envman add --key PATH --value "$PATH"
-            sudo -S cp -r /tmp/android-ndk/android-ndk-r23c/. /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
+            sdkmanager --install "ndk;23.1.7779620"
+            sudo -S cp -r /usr/local/share/android-sdk/ndk/23.1.7779620/. /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             sudo -S cp -r /usr/local/share/android-sdk/ /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
             sudo -S cp -r /Users/vagrant/.jenv/versions/11.0/. /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
+            
     - script:
         title: Activate Unity
         inputs:
@@ -220,10 +211,10 @@ workflows:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
-            cd /Users/vagrant/git/cicd_unity_sample_export_android
+            cd /Users/vagrant/git/cicd_unity_sample_export
             ls -lart
-            gradle clean
-            gradle assemblerelease
+            /Users/vagrant/git/gradle-7.2/bin/gradle clean
+            /Users/vagrant/git/gradle-7.2/bin/gradle assemblerelease
     - save-cache@1:
         inputs:
         - paths: "$BITRISE_SOURCE_DIR"
