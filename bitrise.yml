@@ -246,4 +246,3 @@ meta:
   bitrise.io:
     stack: linux-docker-android-22.04
     machine_type_id: standard
-
