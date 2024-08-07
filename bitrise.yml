@@ -163,6 +163,7 @@ workflows:
             #install unity iOS support pkg
             sudo -S installer -package ./ios.pkg -target / -verbose
             wget -q https://services.gradle.org/distributions/gradle-7.2-bin.zip
+            unzip -q gradle-7.2-bin.zip
             ls -lart
             ls -lart /Applications
             sdkmanager --install "ndk;23.1.7779620"
