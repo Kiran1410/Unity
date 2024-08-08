@@ -241,8 +241,8 @@ workflows:
         is_expand: false
       UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
     - AAR_path: /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar
-        opts:
-            is_expand: false
+      opts:
+        is_expand: false
 meta:
   bitrise.io:
     stack: linux-docker-android-22.04
