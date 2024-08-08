@@ -85,9 +85,6 @@ workflows:
             # fail if any commands fails
 
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
-            ls -lart /Users/
-            ls -lart /Users/vagrant/
-            ls -lart /Users/vagrant/git
             ls -lart /Users/vagrant/git/cicd_unity_sample
     - script:
         title: Build AAR Generation
@@ -166,7 +163,6 @@ workflows:
             unzip -f gradle-7.2-bin.zip
             chmod 777 gradle-7.2
             ls -lart
-            ls -lart /Applications
             sdkmanager --install "ndk;23.1.7779620"
             sudo -S mkdir -p /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             sleep 30
@@ -185,10 +181,7 @@ workflows:
             #!/bin/bash
             # fail if any commands fails
             set -ex
-            ls -lart /Applications/Unity
-            ls -lart /Applications/Unity/Unity.app
-            ls -lart /Applications/Unity/Unity.app/Contents
-            ls -lart /Applications/Unity/Unity.app/Contents/MacOS
+
             cd /Applications/Unity/Unity.app/Contents/MacOS
             ./Unity --version
             cd -
@@ -206,8 +199,6 @@ workflows:
             # fail if any commands fails
 
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
-            ls -lart /Users/vagrant/
-            ls -lart /Users/vagrant/git
             ls -lart /Users/vagrant/git/cicd_unity_sample
     - script:
         title: Build AAR Generation
@@ -215,10 +206,14 @@ workflows:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
+
             cd /Users/vagrant/git/cicd_unity_sample_export_android
             ls -lart
             /Users/vagrant/git/gradle-7.2/bin/gradle clean
             /Users/vagrant/git/gradle-7.2/bin/gradle assemblerelease
+            cp -r /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar /bitrise/deploy/
+            ls -lart /bitrise/deploy/
+    - deploy-to-bitrise-io@2: {}
     - save-cache@1:
         inputs:
         - paths: "$BITRISE_SOURCE_DIR"
