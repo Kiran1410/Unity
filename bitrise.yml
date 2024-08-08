@@ -268,6 +268,7 @@ workflows:
 
             #install unity iOS support pkg
             sudo -S installer -package ./ios.pkg -target / -verbose
+            ls -lart /usr/local/share/
     - script:
         title: Activate Unity
         inputs:
