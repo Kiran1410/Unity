@@ -172,8 +172,7 @@ workflows:
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
             ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
-            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
-            
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK    
     - script:
         title: Activate Unity
         inputs:
@@ -181,7 +180,6 @@ workflows:
             #!/bin/bash
             # fail if any commands fails
             set -ex
-
             cd /Applications/Unity/Unity.app/Contents/MacOS
             ./Unity --version
             cd -
