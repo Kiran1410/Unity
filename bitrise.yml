@@ -164,7 +164,7 @@ workflows:
             sudo -S installer -package ./ios.pkg -target / -verbose
             wget -q https://services.gradle.org/distributions/gradle-7.2-bin.zip
             unzip -f gradle-7.2-bin.zip
-            chomod 
+            chmod 777 gradle-7.2
             ls -lart
             ls -lart /Applications
             sdkmanager --install "ndk;23.1.7779620"
