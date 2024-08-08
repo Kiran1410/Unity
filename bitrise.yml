@@ -1,4 +1,5 @@
-format_version: "13"
+---
+format_version: '13'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 workflows:
@@ -9,11 +10,11 @@ workflows:
     - git-clone@3.4.2: {}
     - restore-cache@2:
         inputs:
-        - key: $BITRISE_GIT_BRANCH
+        - key: "$BITRISE_GIT_BRANCH"
     - script:
         title: Download & Install Unity
         inputs:
-        - script_file_path: null
+        - script_file_path:
         - content: |-
             #!/bin/bash
             set -ex
@@ -97,14 +98,14 @@ workflows:
             gradle assemblerelease
     - save-cache@1:
         inputs:
-        - paths: $BITRISE_SOURCE_DIR
-        - key: $BITRISE_GIT_BRANCH
+        - paths: "$BITRISE_SOURCE_DIR"
+        - key: "$BITRISE_GIT_BRANCH"
         is_always_run: true
     - script:
         is_always_run: true
         title: Deactivate License
         inputs:
-        - script_file_path: null
+        - script_file_path:
         - content: |-
             #!/usr/bin/env bash
             # fail if any commands fails
@@ -123,10 +124,10 @@ workflows:
     envs:
     - opts:
         is_expand: false
-      UPM_CACHE_ROOT: /Users/vagrant/UnityCache
+      UPM_CACHE_ROOT: "/Users/vagrant/UnityCache"
     - opts:
         is_expand: false
-      UNITY_PACKAGE_CACHE_DIR: /Users/vagrant/git/cicd_unity_sample/Library/PackageCache
+      UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
   primary:
     steps:
     - activate-ssh-key@3.1.1:
@@ -134,11 +135,44 @@ workflows:
     - git-clone@3.4.2: {}
     - restore-cache@2:
         inputs:
-        - key: $BITRISE_GIT_BRANCH
+        - key: "$BITRISE_GIT_BRANCH"
     - script:
         title: Download & Install Unity
         inputs:
-        - content: "#!/bin/bash\nset -ex\n#download unity pkg\ncurl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg\n\n#download android support platform\ncurl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg\n\n#download iOS android support\ncurl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg\n\n#install unity pkg\nsudo -S installer -package ./unity.pkg -target / -verbose\n\n#install unity android support pkg\nsudo -S installer -package ./android.pkg -target / -verbose\n\n#install unity iOS support pkg\nsudo -S installer -package ./ios.pkg -target / -verbose\nwget -q https://services.gradle.org/distributions/gradle-7.2-bin.zip\nunzip -f gradle-7.2-bin.zip\nchmod 777 gradle-7.2\nls -lart\nsdkmanager --install \"ndk;23.1.7779620\"\nsudo -S mkdir -p /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK\nsleep 30\nsudo -S cp -a /usr/local/share/android-sdk/ndk/23.1.7779620/ /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK\nsudo -S cp -a /usr/local/share/android-sdk/ /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK\nsudo -S cp -a /Users/vagrant/.jenv/versions/11.0/. /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK\nls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/\nls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK\nls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK\nls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK    "
+        - content: |-
+            #!/bin/bash
+            set -ex
+            #download unity pkg
+            curl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg
+
+            #download android support platform
+            curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
+
+            #download iOS android support
+            curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
+
+            #install unity pkg
+            sudo -S installer -package ./unity.pkg -target / -verbose
+
+            #install unity android support pkg
+            sudo -S installer -package ./android.pkg -target / -verbose
+
+            #install unity iOS support pkg
+            sudo -S installer -package ./ios.pkg -target / -verbose
+            wget -q https://services.gradle.org/distributions/gradle-7.2-bin.zip
+            unzip -f gradle-7.2-bin.zip
+            chmod 777 gradle-7.2
+            ls -lart
+            sdkmanager --install "ndk;23.1.7779620"
+            sudo -S mkdir -p /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
+            sleep 30
+            sudo -S cp -a /usr/local/share/android-sdk/ndk/23.1.7779620/ /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
+            sudo -S cp -a /usr/local/share/android-sdk/ /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
+            sudo -S cp -a /Users/vagrant/.jenv/versions/11.0/. /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/NDK
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/SDK
+            ls -lart /Applications/Unity/PlaybackEngines/AndroidPlayer/OpenJDK    
     - script:
         title: Activate Unity
         inputs:
@@ -175,15 +209,13 @@ workflows:
             ls -lart
             /Users/vagrant/git/gradle-7.2/bin/gradle clean
             /Users/vagrant/git/gradle-7.2/bin/gradle assemblerelease
-            cp -r /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar /bitrise/deploy/
-            ls -lart /bitrise/deploy/
     - deploy-to-bitrise-io@2:
         inputs:
         - deploy_path: $AAR_path
     - save-cache@1:
         inputs:
-        - paths: $BITRISE_SOURCE_DIR
-        - key: $BITRISE_GIT_BRANCH
+        - paths: "$BITRISE_SOURCE_DIR"
+        - key: "$BITRISE_GIT_BRANCH"
         is_always_run: true
     - script:
         is_always_run: true
@@ -204,13 +236,13 @@ workflows:
     envs:
     - opts:
         is_expand: false
-      UPM_CACHE_ROOT: /Users/vagrant/UnityCache
+      UPM_CACHE_ROOT: "/Users/vagrant/UnityCache"
     - opts:
         is_expand: false
-      UNITY_PACKAGE_CACHE_DIR: /Users/vagrant/git/cicd_unity_sample/Library/PackageCache
+      UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
     - AAR_path: /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar
-      opts:
-        is_expand: false
+        opts:
+            is_expand: false
 meta:
   bitrise.io:
     stack: linux-docker-android-22.04
