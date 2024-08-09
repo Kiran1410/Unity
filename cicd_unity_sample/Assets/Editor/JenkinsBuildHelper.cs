@@ -113,7 +113,7 @@ class JenkinsBuildHelper
     {
         Debug.Log("PerformiOSBuild : called...");
         //GenericBuild(SCENES, "../../"+ ABVersionInfo.JobName, BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
-        GenericBuild(SCENES, "../cicd_unity_sample_export_iOS", BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
+        GenericBuild(SCENES, "../cicd_unity_sample_export_iOS", BuildTarget.iOS, BuildOptions.None);
     }
 
     [MenuItem("IvyJenkins/DisableAllScenes")]
