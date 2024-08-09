@@ -291,7 +291,7 @@ workflows:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
-
+            sleep 4000
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget iOS
             ls -lart /Users/vagrant/git/cicd_unity_sample
     - script:
