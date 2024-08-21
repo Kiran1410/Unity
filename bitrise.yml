@@ -293,14 +293,17 @@ workflows:
             # fail if any commands fails
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget iOS
             ls -lart /Users/vagrant/git/cicd_unity_sample
+            cd  /Users/vagrant/git/Xcode_setting_modification_script
+            ls -lart
+            python3 app.py
     - script:
         title: Build AAR Generation
         inputs:
         - content: |-
             #!/bin/bash
             # fail if any commands fails
-
-            cd /Users/vagrant/git/cicd_unity_sample_export_iOS
+            
+            cd /Users/vagrant/git/unity_ios_export_project
             /usr/bin/xcodebuild ARCHS=arm64 archive -scheme UnityFramework -archivePath '/Users/vagrant/git/Sliders_unity' -sdk iphoneos
             cd /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks
             zip -r UnityFramework.framework.zip UnityFramework.framework
