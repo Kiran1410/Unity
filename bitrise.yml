@@ -210,7 +210,7 @@ workflows:
             /Users/vagrant/git/gradle-7.2/bin/gradle assemblerelease
     - deploy-to-bitrise-io@2:
         inputs:
-        - deploy_path: $AAR_path
+        - deploy_path: "$AAR_path"
     - save-cache@1:
         inputs:
         - paths: "$BITRISE_SOURCE_DIR"
