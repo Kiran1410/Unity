@@ -129,8 +129,6 @@ workflows:
         is_expand: false
       UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
     - AAR_path: /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar
-      opts:
-        is_expand: false
   primary:
     steps:
     - activate-ssh-key@3.1.1:
@@ -213,7 +211,7 @@ workflows:
             /Users/vagrant/git/gradle-7.2/bin/gradle assemblerelease
     - deploy-to-bitrise-io@2:
         inputs:
-        - deploy_path: $AAR_path
+        - deploy_path: "$AAR_path"
     - save-cache@1:
         inputs:
         - paths: "$BITRISE_SOURCE_DIR"
@@ -312,7 +310,7 @@ workflows:
             ls -lart /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks
     - deploy-to-bitrise-io@2:
         inputs:
-        - deploy_path: $Framework_path
+        - deploy_path: "$Framework_path"
     - save-cache@1:
         inputs:
         - paths: "$BITRISE_SOURCE_DIR"
@@ -328,8 +326,7 @@ workflows:
             set -e
             set -o pipefail
             set -x
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense
-            
+            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense   
     meta:
       bitrise.io:
         license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
@@ -343,8 +340,6 @@ workflows:
         is_expand: false
       UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
     - Framework_path: /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks/UnityFramework.framework.zip
-      opts:
-        is_expand: false
 meta:
   bitrise.io:
     stack: linux-docker-android-22.04
