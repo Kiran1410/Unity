@@ -3,132 +3,132 @@ format_version: '13'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 workflows:
-  bitrise_test_primary:
-    steps:
-    - activate-ssh-key@3.1.1:
-        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-    - git-clone@3.4.2: {}
-    - restore-cache@2:
-        inputs:
-        - key: "$BITRISE_GIT_BRANCH"
-    - script:
-        title: Download & Install Unity
-        inputs:
-        - script_file_path:
-        - content: |-
-            #!/bin/bash
-            set -ex
-            ls -lart /Applications
-            #download unity pkg
-            curl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg
-            pwd
+#   bitrise_test_primary:
+#     steps:
+#     - activate-ssh-key@3.1.1:
+#         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+#     - git-clone@3.4.2: {}
+#     - restore-cache@2:
+#         inputs:
+#         - key: "$BITRISE_GIT_BRANCH"
+#     - script:
+#         title: Download & Install Unity
+#         inputs:
+#         - script_file_path:
+#         - content: |-
+#             #!/bin/bash
+#             set -ex
+#             ls -lart /Applications
+#             #download unity pkg
+#             curl -o ./unity.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorInstaller/Unity-2022.3.24f1.pkg
+#             pwd
 
-            #download android support platform
-            curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
+#             #download android support platform
+#             curl -o ./android.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-Android-Support-for-Editor-2022.3.24f1.pkg
 
-            #download iOS android support
-            curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
+#             #download iOS android support
+#             curl -o ./ios.pkg http://download.unity3d.com/download_unity/334eb2a0b267/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.24f1.pkg
 
-            #install unity pkg
-            sudo -S installer -package ./unity.pkg -target / -verbose
+#             #install unity pkg
+#             sudo -S installer -package ./unity.pkg -target / -verbose
 
-            #install unity android support pkg
-            sudo -S installer -package ./android.pkg -target / -verbose
+#             #install unity android support pkg
+#             sudo -S installer -package ./android.pkg -target / -verbose
 
-            #install unity iOS support pkg
-            sudo -S installer -package ./ios.pkg -target / -verbose
+#             #install unity iOS support pkg
+#             sudo -S installer -package ./ios.pkg -target / -verbose
 
-            # download
-            mkdir -p /tmp/android-ndk
-            cd /tmp/android-ndk
-            wget -q https://dl.google.com/android/repository/android-ndk-r23c-darwin.zip
+#             # download
+#             mkdir -p /tmp/android-ndk
+#             cd /tmp/android-ndk
+#             wget -q https://dl.google.com/android/repository/android-ndk-r23c-darwin.zip
 
-            # uncompress
-            unzip -q android-ndk-r23c-darwin.zip
+#             # uncompress
+#             unzip -q android-ndk-r23c-darwin.zip
 
-            # add to PATH
-            export PATH=${PATH}:/tmp/android-ndk
-            # expose for subsequent steps
-            envman add --key PATH --value "$PATH"
-            cd -
-    - script:
-        title: Activate Unity
-        inputs:
-        - content: |-
-            #!/bin/bash
-            # fail if any commands fails
-            set -ex
-            pwd
-            ls -lart /Users/vagrant/
-            ls -lart /Users/vagrant/git/
-            ls -lart /Users/vagrant/git/cicd_unity_sample
-            ls -lart /Applications
-            ls -lart /Applications/Unity
-            ls -lart /Applications/Unity/Unity.app
-            ls -lart /Applications/Unity/Unity.app/Contents
-            ls -lart /Applications/Unity/Unity.app/Contents/MacOS
-            cd /Applications/Unity/Unity.app/Contents/MacOS
-            ./Unity --version
-            cd -
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -logfile &
-            sleep 30
-            sudo killall Unity
-            pwd
-            ls -lart
+#             # add to PATH
+#             export PATH=${PATH}:/tmp/android-ndk
+#             # expose for subsequent steps
+#             envman add --key PATH --value "$PATH"
+#             cd -
+#     - script:
+#         title: Activate Unity
+#         inputs:
+#         - content: |-
+#             #!/bin/bash
+#             # fail if any commands fails
+#             set -ex
+#             pwd
+#             ls -lart /Users/vagrant/
+#             ls -lart /Users/vagrant/git/
+#             ls -lart /Users/vagrant/git/cicd_unity_sample
+#             ls -lart /Applications
+#             ls -lart /Applications/Unity
+#             ls -lart /Applications/Unity/Unity.app
+#             ls -lart /Applications/Unity/Unity.app/Contents
+#             ls -lart /Applications/Unity/Unity.app/Contents/MacOS
+#             cd /Applications/Unity/Unity.app/Contents/MacOS
+#             ./Unity --version
+#             cd -
+#             /Applications/Unity/Unity.app/Contents/MacOS/Unity -logfile &
+#             sleep 30
+#             sudo killall Unity
+#             pwd
+#             ls -lart
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -logfile
-    - script:
-        title: Build Export Project Generation
-        inputs:
-        - content: |-
-            #!/bin/bash
-            # fail if any commands fails
+#             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -logfile
+#     - script:
+#         title: Build Export Project Generation
+#         inputs:
+#         - content: |-
+#             #!/bin/bash
+#             # fail if any commands fails
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
-            ls -lart /Users/vagrant/git/cicd_unity_sample
-    - script:
-        title: Build AAR Generation
-        inputs:
-        - content: |-
-            #!/bin/bash
-            # fail if any commands fails
-            cd /Users/vagrant/git/cicd_unity_sample_export_android
-            ls -lart
-            gradle clean
-            gradle assemblerelease
-    - save-cache@1:
-        inputs:
-        - paths: "$BITRISE_SOURCE_DIR"
-        - key: "$BITRISE_GIT_BRANCH"
-        is_always_run: true
-    - script:
-        is_always_run: true
-        title: Deactivate License
-        inputs:
-        - script_file_path:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
-            set -o pipefail
-            # debug log
-            set -x
+#             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget Android
+#             ls -lart /Users/vagrant/git/cicd_unity_sample
+#     - script:
+#         title: Build AAR Generation
+#         inputs:
+#         - content: |-
+#             #!/bin/bash
+#             # fail if any commands fails
+#             cd /Users/vagrant/git/cicd_unity_sample_export_android
+#             ls -lart
+#             gradle clean
+#             gradle assemblerelease
+#     - save-cache@1:
+#         inputs:
+#         - paths: "$BITRISE_SOURCE_DIR"
+#         - key: "$BITRISE_GIT_BRANCH"
+#         is_always_run: true
+#     - script:
+#         is_always_run: true
+#         title: Deactivate License
+#         inputs:
+#         - script_file_path:
+#         - content: |-
+#             #!/usr/bin/env bash
+#             # fail if any commands fails
+#             set -e
+#             # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+#             set -o pipefail
+#             # debug log
+#             set -x
 
-            /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense
-    meta:
-      bitrise.io:
-        license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
-        stack: osx-xcode-15.4.x
-        machine_type_id: g2-m1-max.5core
-    envs:
-    - opts:
-        is_expand: false
-      UPM_CACHE_ROOT: "/Users/vagrant/UnityCache"
-    - opts:
-        is_expand: false
-      UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
-    - AAR_path: /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar
+#             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense
+#     meta:
+#       bitrise.io:
+#         license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
+#         stack: osx-xcode-15.4.x
+#         machine_type_id: g2-m1-max.5core
+#     envs:
+#     - opts:
+#         is_expand: false
+#       UPM_CACHE_ROOT: "/Users/vagrant/UnityCache"
+#     - opts:
+#         is_expand: false
+#       UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
+#     - AAR_path: /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar
   primary:
     steps:
     - activate-ssh-key@3.1.1:
