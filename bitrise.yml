@@ -114,7 +114,7 @@ workflows:
     - opts:
         is_expand: false
       UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
-    - AAR_path: /Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar
+    - AAR_path: "/Users/vagrant/git/cicd_unity_sample_export_android/unityLibrary/build/outputs/aar/unityLibrary-release.aar"
       opts:
         is_expand: false
   Unity_iOS:
@@ -213,6 +213,6 @@ workflows:
     - opts:
         is_expand: false
       UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
-    - Framework_path: /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks/UnityFramework.framework.zip
+    - Framework_path: "/Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks/UnityFramework.framework.zip"
       opts:
         is_expand: false
