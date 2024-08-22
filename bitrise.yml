@@ -342,7 +342,7 @@ workflows:
     - Framework_path: /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks/UnityFramework.framework.zip
       opts:
         is_expand: false
-meta:
-  bitrise.io:
-    stack: linux-docker-android-22.04
-    machine_type_id: standard
+# meta:
+#   bitrise.io:
+#     stack: linux-docker-android-22.04
+#     machine_type_id: standard
