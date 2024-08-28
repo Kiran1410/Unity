@@ -294,7 +294,7 @@ workflows:
             # fail if any commands fails
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -nographics -batchmode -serial SC-Y6CX-XYJF-ZXXN-83MV-9B2F -username 's.c.apps@ivycomptech.com' -password 'Ivy@1234' -projectPath /Users/vagrant/git/cicd_unity_sample -executeMethod JenkinsBuildHelper.PerformAndroidIOSBuild release -buildTarget iOS
             ls -lart /Users/vagrant/git/cicd_unity_sample
-            cd /Users/vagrant/git/cicd_unity_sample/Xcode_setting_modification_script
+            cd /Users/vagrant/git/Xcode_setting_modification_script
             ls -lart
             python3 app.py
     - script:
