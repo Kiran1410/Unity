@@ -298,7 +298,7 @@ workflows:
             ls -lart
             python3 app.py
     - script:
-        title: Build AAR Generation
+        title: Framework Creation
         inputs:
         - content: |-
             #!/bin/bash
