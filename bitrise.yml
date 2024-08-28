@@ -327,11 +327,11 @@ workflows:
             set -o pipefail
             set -x
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense   
-    # meta:
-    #   bitrise.io:
-    #     license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
-    #     stack: osx-xcode-15.4.x
-    #     machine_type_id: g2-m1-max.5core
+    meta:
+      bitrise.io:
+        license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
+        stack: osx-xcode-15.4.x
+        machine_type_id: g2-m1-max.5core
     envs:
     - opts:
         is_expand: false
@@ -342,7 +342,7 @@ workflows:
     - Framework_path: /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks/UnityFramework.framework.zip
       opts:
         is_expand: false
-# meta:
-#   bitrise.io:
-#     stack: linux-docker-android-22.04
-#     machine_type_id: standard
+meta:
+  bitrise.io:
+    stack: linux-docker-android-22.04
+    machine_type_id: standard
