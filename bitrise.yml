@@ -304,7 +304,7 @@ workflows:
             #!/bin/bash
             # fail if any commands fails
             cd /Users/vagrant/git/unity_ios_export_project
-            /usr/bin/xcodebuild archive -scheme UnityFramework -archivePath '/Users/vagrant/git/Sliders_unity' -sdk iphoneos
+            /usr/bin/xcodebuild ARCHS=arm64 x86_64 archive -scheme UnityFramework -archivePath '/Users/vagrant/git/Sliders_unity' -sdk iphoneos
             cd /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks
             zip -r UnityFramework.framework.zip UnityFramework.framework
             ls -lart /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks
@@ -326,12 +326,8 @@ workflows:
             set -e
             set -o pipefail
             set -x
+            sleep 4000
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense   
-    # meta:
-    #   bitrise.io:
-    #     license_pool_id: 86fe19ef-d81c-45b4-9238-c8230ec73cfc
-    #     stack: osx-xcode-15.4.x
-    #     machine_type_id: g2-m1-max.5core
     envs:
     - opts:
         is_expand: false
