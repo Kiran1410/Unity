@@ -326,7 +326,6 @@ workflows:
             set -e
             set -o pipefail
             set -x
-            sleep 4000
             /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logFile -returnlicense   
     envs:
     - opts:
@@ -335,6 +334,6 @@ workflows:
     - opts:
         is_expand: false
       UNITY_PACKAGE_CACHE_DIR: "/Users/vagrant/git/cicd_unity_sample/Library/PackageCache"
-    - Framework_path: /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks/UnityFramework.framework.zip
+    - Framework_path: /Users/vagrant/git/Sliders_unity.xcarchive/Products/Library/Frameworks/UnityFramework.framework.zip
       opts:
         is_expand: false
