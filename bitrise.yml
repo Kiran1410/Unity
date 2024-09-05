@@ -305,9 +305,9 @@ workflows:
             # fail if any commands fails
             cd /Users/vagrant/git/unity_ios_export_project
             /usr/bin/xcodebuild archive -scheme UnityFramework -archivePath '/Users/vagrant/git/Sliders_unity' -sdk iphoneos -arch i386
-            cd /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks
+            cd /Users/vagrant/git/Sliders_unity.xcarchive/Products/Library/Frameworks
             zip -r UnityFramework.framework.zip UnityFramework.framework
-            ls -lart /Users/vagrant/git/Sliders_unity/Sliders_unity.xcarchive/Products/Library/Frameworks
+            ls -lart /Users/vagrant/git/Sliders_unity.xcarchive/Products/Library/Frameworks
     - deploy-to-bitrise-io@2:
         inputs:
         - deploy_path: "$Framework_path"
