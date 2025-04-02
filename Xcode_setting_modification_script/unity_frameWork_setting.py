@@ -31,6 +31,7 @@ class UnityFrameWorkSetting:
                      #"$(ARCHS_STANDARD)"
                     buildSettings['ARCHS'] = "$(ARCHS_STANDARD)"
                     buildSettings['SKIP_INSTALL'] = False
+                    buildSettings['ENABLE_BITCODE'] = 'YES'
                     config["buildSettings"] = buildSettings 
                     print(buildSettings)
                 newConfig.append(config)
